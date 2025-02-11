@@ -1,0 +1,7 @@
+Flask
+Flask-SQLAlchemy
+mysql-connector-python
+python-dotenv
+SQLAlchemy
+requests
+xmltodict
