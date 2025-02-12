@@ -31,7 +31,7 @@ app.register_blueprint(api)  # Fix import
 @app.route('/')
 def home():
     logging.info('Home route accessed')
-    return "MoMo Data Analysis App is running!"
+    return "MoMo Data Analysis App is running! @ David, @ Joan, @ Abraham, @ Miracle );WELL DONE!!"
 
 if __name__ == "__main__":
     logging.info('Starting the application...')
