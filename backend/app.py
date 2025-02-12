@@ -4,7 +4,7 @@
 import logging
 from flask import Flask
 from backend.routes import app_routes
-from backend.database import db
+
 
 # Setting up logging
 logging.basicConfig(
