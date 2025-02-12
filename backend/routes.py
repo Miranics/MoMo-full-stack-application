@@ -2,10 +2,10 @@ from flask import Blueprint, request, jsonify
 from backend.database import SessionLocal
 from backend.models import Transaction, User
 
-# Change the variable name to match the import in app.py
-app_routes = Blueprint("app_routes", __name__)
+# Correct Blueprint name (should match app.py)
+api = Blueprint("api", __name__)  # Renamed from 'app_routes' to 'api'
 
-@app_routes.route("/transactions", methods=["GET"])
+@api.route("/transactions", methods=["GET"])
 def get_transactions():
     session = SessionLocal()
     transactions = session.query(Transaction).all()
@@ -18,7 +18,7 @@ def get_transactions():
         "timestamp": tx.timestamp
     } for tx in transactions])
 
-@app_routes.route("/users", methods=["GET"])
+@api.route("/users", methods=["GET"])
 def get_users():
     session = SessionLocal()
     users = session.query(User).all()
