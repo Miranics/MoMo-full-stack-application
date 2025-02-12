@@ -1,8 +1,8 @@
 from flask import Blueprint, request, jsonify
-from database import SessionLocal
-from models import Transaction, User
+from backend.database import SessionLocal
+from backend.models import Transaction, User
 
-api = Blueprint("api", __name__)
+api = Blueprint("app_routes", __name__)
 
 @api.route("/transactions", methods=["GET"])
 def get_transactions():
