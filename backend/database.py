@@ -8,11 +8,18 @@ from dotenv import load_dotenv
 # Load environment variables from .env
 load_dotenv()
 
-# Get the database URL from environment variables
-DATABASE_URL = os.getenv("DATABASE_URL")
+# Get database credentials from environment variables
+DB_USER = os.getenv("DB_USER")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
+DB_HOST = os.getenv("DB_HOST")
+DB_PORT = os.getenv("DB_PORT")
+DB_NAME = os.getenv("DB_NAME")
 
-# Create the database engine
-engine = create_engine(DATABASE_URL)
+# Construct database URL without ssl-mode in query string
+DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+
+# Create the database engine with SSL support
+engine = create_engine(DATABASE_URL, connect_args={"ssl": {"ssl_mode": "REQUIRED"}})
 
 # Create a session factory
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
@@ -36,4 +43,3 @@ def get_db():
         yield db
     finally:
         db.close()
-
