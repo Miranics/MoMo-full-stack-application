@@ -28,3 +28,7 @@ def get_users():
         "name": user.name,
         "phone_number": user.phone_number
     } for user in users])
+
+@app.route('/health')
+def health():
+    return jsonify({"status": "ok"}), 200
