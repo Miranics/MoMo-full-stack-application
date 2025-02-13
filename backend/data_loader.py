@@ -2,12 +2,6 @@ from sqlalchemy.orm import sessionmaker
 from database import engine
 from models import Transaction
 from sms_parser import parse_sms_transactions
-from backend.utils import get_data_file_path
-
-DATA_FILE_PATH = get_data_file_path()
-
-with open(DATA_FILE_PATH, "r", encoding="utf-8") as file:
-    xml_data = file.read()
 
 # Create a new database session
 SessionLocal = sessionmaker(bind=engine)
