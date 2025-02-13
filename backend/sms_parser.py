@@ -1,19 +1,16 @@
 import xml.etree.ElementTree as ET
 from datetime import datetime
+from backend.utils import get_data_file_path  # Import function for correct path handling
 
-
-
-def parse_momo_sms(xml_file):
+def parse_momo_sms():
     """
     Parses the XML file containing MoMo transaction messages.
-    
-    Args:
-        xml_file (str): Path to the XML file.
     
     Returns:
         list: A list of dictionaries containing transaction details.
     """
     transactions = []
+    xml_file = get_data_file_path()  # Get correct XML file path
     
     try:
         tree = ET.parse(xml_file)
@@ -45,7 +42,7 @@ def extract_transaction_details(sms_body):
         # Example: Extract amount, phone number, type, and timestamp from SMS
         words = sms_body.split()
         amount = int(words[words.index("RWF") - 1])  # Assuming amount is before "RWF"
-        phone_number = words[-1]  # lets Assum phone number is last
+        phone_number = words[-1]  # Assumes phone number is last
         transaction_type = "Deposit" if "received" in sms_body else "Withdrawal"
         timestamp = datetime.utcnow()
         
@@ -61,6 +58,6 @@ def extract_transaction_details(sms_body):
 
 # Example usage:
 if __name__ == "__main__":
-    transactions = parse_momo_sms("../data/momo_sms.xml")
+    transactions = parse_momo_sms()
     for tx in transactions:
         print(tx)
