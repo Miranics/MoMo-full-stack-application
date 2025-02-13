@@ -43,7 +43,7 @@ def extract_transaction_details(sms_body):
         # Example: Extract amount, phone number, type, and timestamp from SMS
         words = sms_body.split()
         amount = int(words[words.index("RWF") - 1])  # Assuming amount is before "RWF"
-        phone_number = words[-1]  # Assuming phone number is last
+        phone_number = words[-1]  # lets Assum phone number is last
         transaction_type = "Deposit" if "received" in sms_body else "Withdrawal"
         timestamp = datetime.utcnow()
         
