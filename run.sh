@@ -1,10 +1,16 @@
 #!/usr/bin/env bash
-# Run the Flask application
+# Running Flask application with this shell script
 
-# virtual environment activated 
-source venv/bin/activate
+# Detect the OS and activate the virtual environment accordingly
+if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" ]]; then
+    # For Windows (Git Bash)
+    source venv/Scripts/activate
+else
+    # For Linux/macOS
+    source venv/bin/activate
+fi
 
-# Flask environment variable all set up
+# Set Flask environment variable
 export FLASK_APP=backend/app.py
 
 # Run Flask server
