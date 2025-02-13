@@ -29,6 +29,6 @@ def get_users():
         "phone_number": user.phone_number
     } for user in users])
 
-@app.route('/health')
+@api.route('/health')
 def health():
     return jsonify({"status": "ok"}), 200
