@@ -1,19 +1,25 @@
+import os
 from sqlalchemy.orm import sessionmaker
 from backend.database import engine
 from backend.models import Transaction
-from backend.sms_parser import parse_momo_sms  # Fix incorrect function name
-from backend.utils import get_data_file_path  # Ensure correct XML path
+from backend.sms_parser import parse_momo_sms
+
+# Set correct path to data file
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # Go to project root
+DATA_FILE_PATH = os.path.join(BASE_DIR, "data", "momo_sms.xml")  # Ensure correct path
 
 # Create a new database session
 SessionLocal = sessionmaker(bind=engine)
 session = SessionLocal()
 
-def insert_transactions():
+def insert_transactions(xml_file=DATA_FILE_PATH):
     """
-    Inserts parsed transactions from the XML file into the database.
+    Inserts parsed transactions from an XML file into the database.
+
+    Args:
+        xml_file (str): Path to the XML file containing transaction data.
     """
-    xml_file = get_data_file_path()  # Get correct XML file path
-    transactions = parse_momo_sms()  # Use the updated parser function
+    transactions = parse_momo_sms(xml_file)
 
     if not transactions:
         print("No transactions to insert.")
