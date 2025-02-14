@@ -3,28 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MoMo Transactions Dashboard</title>
+    <title>MoMo Data Dashboard</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <header>
-        <h1>MoMo Transactions Dashboard</h1>
+        <h1>MoMo Data Analysis</h1>
     </header>
-    
     <main>
-        <section class="transactions">
-            <h2>Recent Transactions</h2>
-            <div id="transactions-list">Loading transactions...</div>
+        <section id="summary">
+            <div class="card">
+                <h3>Total Transactions</h3>
+                <p id="total-transactions">0</p>
+            </div>
+            <div class="card">
+                <h3>Total Amount Processed</h3>
+                <p id="total-amount">0 RWF</p>
+            </div>
         </section>
 
-        <section class="charts">
-            <h2>Transaction Overview</h2>
-            <canvas id="transactionsChart"></canvas>
+        <section id="chart-container">
+            <canvas id="transactionChart"></canvas>
+        </section>
+
+        <section id="transactions">
+            <h2>Transaction History</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Phone Number</th>
+                        <th>Amount (RWF)</th>
+                        <th>Type</th>
+                        <th>Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody id="transaction-table-body">
+                    <!-- Transactions will be inserted dynamically -->
+                </tbody>
+            </table>
         </section>
     </main>
-
     <script src="app.js"></script>
-    <script src="charts.js"></script>
 </body>
 </html>

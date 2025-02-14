@@ -1,37 +1,66 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
     fetchTransactions();
 });
 
-const API_BASE_URL = "http://127.0.0.1:5000"; // Adjust this if backend runs on a different port
-
 async function fetchTransactions() {
     try {
-        const response = await fetch(`${API_BASE_URL}/transactions`);
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
+        const response = await fetch("http://127.0.0.1:5000/api/transactions");
         const data = await response.json();
-        displayTransactions(data);
+
+        updateSummary(data);
+        updateTransactionTable(data);
+        renderChart(data);
     } catch (error) {
         console.error("Error fetching transactions:", error);
-        document.getElementById("transactions-list").innerHTML = "<p>Error loading transactions.</p>";
     }
 }
 
-function displayTransactions(transactions) {
-    const transactionsList = document.getElementById("transactions-list");
-    transactionsList.innerHTML = ""; // Clear existing content
+function updateSummary(transactions) {
+    document.getElementById("total-transactions").textContent = transactions.length;
+    
+    const totalAmount = transactions.reduce((sum, tx) => sum + tx.amount, 0);
+    document.getElementById("total-amount").textContent = `${totalAmount.toLocaleString()} RWF`;
+}
 
-    transactions.forEach(txn => {
-        const txnItem = document.createElement("div");
-        txnItem.classList.add("transaction-item");
-        txnItem.innerHTML = `
-            <p><strong>Amount:</strong> ${txn.amount} RWF</p>
-            <p><strong>Type:</strong> ${txn.type}</p>
-            <p><strong>Sender:</strong> ${txn.sender}</p>
-            <p><strong>Receiver:</strong> ${txn.receiver}</p>
-            <p><strong>Date:</strong> ${new Date(txn.timestamp).toLocaleString()}</p>
+function updateTransactionTable(transactions) {
+    const tbody = document.getElementById("transaction-table-body");
+    tbody.innerHTML = "";
+
+    transactions.forEach(tx => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${tx.phone_number}</td>
+            <td>${tx.amount.toLocaleString()} RWF</td>
+            <td>${tx.transaction_type}</td>
+            <td>${new Date(tx.timestamp).toLocaleString()}</td>
         `;
-        transactionsList.appendChild(txnItem);
+        tbody.appendChild(row);
+    });
+}
+
+function renderChart(transactions) {
+    const ctx = document.getElementById("transactionChart").getContext("2d");
+    
+    const labels = transactions.map(tx => new Date(tx.timestamp).toLocaleDateString());
+    const amounts = transactions.map(tx => tx.amount);
+
+    new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: labels,
+            datasets: [{
+                label: "Transaction Amounts (RWF)",
+                data: amounts,
+                backgroundColor: "gold",
+                borderColor: "black",
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
     });
 }
