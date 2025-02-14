@@ -1,0 +1,48 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #FFCC00; /* MTN yellow */
+    color: #333;
+}
+
+header {
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
+
+main {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+}
+
+.transactions, .charts {
+    background: white;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+#transactions-list {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.transaction {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.transaction:last-child {
+    border-bottom: none;
+}
