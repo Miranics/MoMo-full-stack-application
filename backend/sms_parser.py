@@ -1,28 +1,31 @@
-import xml.etree.ElementTree as ET
-import re
 import os
+import re
+import xml.etree.ElementTree as ET
 from datetime import datetime
+from bs4 import BeautifulSoup
 
 # Set correct path to data file
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_FILE_PATH = os.path.join(BASE_DIR, "data", "momo_sms.xml")
 
 def clean_xml(file_path):
-    """Removes invalid characters from the XML file before parsing."""
-    with open(file_path, "r", encoding="utf-8") as file:
-        content = file.read()
-    cleaned_content = re.sub(r"[^\x20-\x7E\n\r]", "", content)
-    with open(file_path, "w", encoding="utf-8") as file:
-        file.write(cleaned_content)
+    """Clean and validate XML file"""
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            content = file.read()
+        soup = BeautifulSoup(content, 'xml')
+        return str(soup)
+    except Exception as e:
+        print(f"Error cleaning XML: {e}")
+        return None
 
 def parse_momo_sms(xml_file=DATA_FILE_PATH):
-    """Parses the XML file containing MoMo transaction messages."""
+    """Parse MoMo SMS messages from XML file"""
     transactions = []
-    clean_xml(xml_file)
     try:
         tree = ET.parse(xml_file)
         root = tree.getroot()
-        for message in root.findall(".//sms"):  # Locate all SMS entries
+        for message in root.findall(".//sms"):
             content = message.get("body")
             if content:
                 parsed_data = extract_transaction_details(content)
@@ -37,38 +40,59 @@ def parse_momo_sms(xml_file=DATA_FILE_PATH):
     return transactions
 
 def extract_transaction_details(sms_body):
-    """Extracts transaction details from SMS content."""
+    """Extracts transaction details from SMS content"""
     try:
-        amount_match = re.search(r"(\d{1,})\s*RWF", sms_body)
-        receiver_match = re.search(r"to\s+([A-Za-z]+\s+[A-Za-z]+)", sms_body)
-        phone_match = re.search(r"\((\d{9,12})\)", sms_body)
-        tx_id_match = re.search(r"TxId:\s*(\d+)", sms_body)
-        date_match = re.search(r"(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2})", sms_body)
+        # Amount pattern
+        amount_match = re.search(r"(\d{1,3}(?:,\d{3})*)\s*RWF", sms_body)
         
-        if not all([amount_match, receiver_match, date_match]):
-            print(f"Error: Could not extract transaction details from SMS: {sms_body}")
+        # Phone number pattern
+        phone_match = re.search(r"\((\d{10,12})\)", sms_body)
+        
+        # Transaction type patterns
+        deposit_pattern = re.search(r"received|deposited", sms_body, re.IGNORECASE)
+        withdrawal_pattern = re.search(r"withdrawn|sent", sms_body, re.IGNORECASE)
+        
+        # Date pattern
+        date_match = re.search(r"(\d{2}/\d{2}/\d{4}\s+\d{2}:\d{2})", sms_body)
+        
+        if not amount_match:
             return None
+            
+        # Clean and convert amount
+        amount = int(amount_match.group(1).replace(",", ""))
         
-        amount = int(amount_match.group(1))
-        receiver = receiver_match.group(1)
-        phone_number = phone_match.group(1) if phone_match else None
-        tx_id = tx_id_match.group(1) if tx_id_match else None
-        timestamp = datetime.strptime(date_match.group(1), "%Y-%m-%d %H:%M:%S")
+        # Get phone number
+        phone_number = phone_match.group(1) if phone_match else "UNKNOWN"
         
+        # Determine transaction type
+        if deposit_pattern:
+            transaction_type = "DEPOSIT"
+        elif withdrawal_pattern:
+            transaction_type = "WITHDRAWAL"
+        else:
+            transaction_type = "UNKNOWN"
+            
+        # Parse timestamp
+        timestamp = datetime.now()
+        if date_match:
+            try:
+                timestamp = datetime.strptime(date_match.group(1), "%d/%m/%Y %H:%M")
+            except ValueError:
+                pass
+                
         return {
             "phone_number": phone_number,
-            "receiver": receiver,
             "amount": amount,
-            "transaction_type": "Deposit" if "received" in sms_body else "Withdrawal",
-            "timestamp": timestamp,
-            "transaction_id": tx_id
+            "transaction_type": transaction_type,
+            "timestamp": timestamp
         }
+        
     except Exception as e:
-        print(f"Unexpected error extracting transaction details: {e}")
+        print(f"Error parsing SMS body: {e}")
         return None
 
-# Example usage
 if __name__ == "__main__":
     transactions = parse_momo_sms()
-    for tx in transactions:
-        print(tx)
+    print(f"Found {len(transactions)} transactions")
+    if transactions:
+        print("Sample transaction:", transactions[0])
