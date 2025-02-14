@@ -40,7 +40,8 @@ def parse_momo_sms(xml_file=DATA_FILE_PATH):
         for message in root.findall(".//sms"):  # Locate all SMS entries
             content = message.get("body")  # Extract SMS body
             print(f"Extracted SMS: {content}")  # Debugging line
-            if content and "Mobile Money" in content:
+            
+            if content:
                 parsed_data = extract_transaction_details(content)
                 if parsed_data:
                     transactions.append(parsed_data)
@@ -64,11 +65,24 @@ def extract_transaction_details(sms_body):
         dict: Extracted transaction details or None if parsing fails.
     """
     try:
-        words = sms_body.split()
-        amount = int(words[words.index("RWF") - 1])  # Assuming amount is before "RWF"
-        phone_number = words[-1]  # Assuming phone number is last
-        transaction_type = "Deposit" if "received" in sms_body else "Withdrawal"
-        timestamp = datetime.utcnow()
+        # Extract amount
+        amount_match = re.search(r"payment of ([\d,]+) RWF", sms_body)
+        amount = int(amount_match.group(1).replace(",", "")) if amount_match else None
+
+        # Extract phone number (Assuming it's the last number in the message)
+        phone_match = re.findall(r"\b\d{5}\b", sms_body)
+        phone_number = phone_match[-1] if phone_match else None
+
+        # Determine transaction type
+        transaction_type = "Deposit" if "received" in sms_body else "Payment"
+
+        # Extract timestamp
+        timestamp_match = re.search(r"at (\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})", sms_body)
+        timestamp = datetime.strptime(timestamp_match.group(1), "%Y-%m-%d %H:%M:%S") if timestamp_match else datetime.utcnow()
+
+        if amount is None or phone_number is None:
+            print(f"Error: Could not extract transaction details from SMS: {sms_body}")
+            return None
 
         return {
             "phone_number": phone_number,
@@ -76,9 +90,6 @@ def extract_transaction_details(sms_body):
             "transaction_type": transaction_type,
             "timestamp": timestamp
         }
-    except ValueError:
-        print(f"Error: Could not extract transaction details from SMS: {sms_body}")
-        return None
     except Exception as e:
         print(f"Unexpected error extracting transaction details: {e}")
         return None
