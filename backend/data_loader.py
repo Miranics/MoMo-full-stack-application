@@ -1,52 +1,38 @@
-import os
-from sqlalchemy.orm import sessionmaker
-from backend.database import engine
-from backend.models import Transaction
+import mysql.connector
 from backend.sms_parser import parse_momo_sms
+from backend.config import DB_CONFIG
 
-# Set correct path to data file
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # Go to project root
-DATA_FILE_PATH = os.path.join(BASE_DIR, "data", "momo_sms.xml")  # Ensure correct path
-
-# Create a new database session
-SessionLocal = sessionmaker(bind=engine)
-session = SessionLocal()
-
-def insert_transactions(xml_file=DATA_FILE_PATH):
+def insert_transactions():
     """
-    Inserts parsed transactions from an XML file into the database.
-
-    Args:
-        xml_file (str): Path to the XML file containing transaction data.
+    Inserts parsed transactions into the database.
     """
-    transactions = parse_momo_sms(xml_file)
-
+    transactions = parse_momo_sms()
+    
     if not transactions:
         print("No transactions to insert.")
         return
 
     try:
-        # Iterate over transactions and add them to the session
+        conn = mysql.connector.connect(**DB_CONFIG)
+        cursor = conn.cursor()
+
+        insert_query = """
+        INSERT INTO transactions (phone_number, amount, transaction_type, timestamp)
+        VALUES (%s, %s, %s, %s)
+        """
+
         for tx in transactions:
-            new_tx = Transaction(
-                phone_number=tx["phone_number"],
-                amount=tx["amount"],
-                transaction_type=tx["transaction_type"],
-                timestamp=tx["timestamp"]
-            )
-            session.add(new_tx)
-        
-        # Commit all changes to the database
-        session.commit()
-        print(f"Successfully inserted {len(transactions)} transactions into the database.")
+            cursor.execute(insert_query, (tx["phone_number"], tx["amount"], tx["transaction_type"], tx["timestamp"]))
 
-    except Exception as e:
-        session.rollback()  # Rollback in case of error
-        print(f"Error inserting transactions: {e}")
+        conn.commit()
+        print(f"Inserted {cursor.rowcount} transactions successfully.")
 
+    except mysql.connector.Error as e:
+        print(f"Database error: {e}")
     finally:
-        session.close()  # Close the session
+        if conn.is_connected():
+            cursor.close()
+            conn.close()
 
-# Example usage
 if __name__ == "__main__":
     insert_transactions()
