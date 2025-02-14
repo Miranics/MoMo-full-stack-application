@@ -39,7 +39,7 @@ def parse_momo_sms(xml_file=DATA_FILE_PATH):
 
         for message in root.findall(".//sms"):  # Locate all SMS entries
             content = message.get("body")  # Extract SMS body
-            print(f"Extracted SMS: {content}")  # Debugging line
+            #print(f"Extracted SMS: {content}")  # Debugging line
             
             if content:
                 parsed_data = extract_transaction_details(content)
