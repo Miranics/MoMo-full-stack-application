@@ -3,7 +3,7 @@
 
 import logging
 from flask import Flask
-from backend.routes import api  # Fix import: 'app_routes' → 'api'
+from backend.routes import api  # Fix import
 from backend.database import engine, Base
 
 # Setting up logging
@@ -25,13 +25,13 @@ app.config.from_object('backend.config.Config')
 # Create database tables (if they don't exist)
 Base.metadata.create_all(bind=engine)
 
-# Register Blueprints
-app.register_blueprint(api)  # Fix import
+# Register Blueprints with URL prefix
+app.register_blueprint(api, url_prefix="/api")  # <-- Add "/api" prefix
 
 @app.route('/')
 def home():
     logging.info('Home route accessed')
-    return "MoMo Data Analysis App is running! @ David, @ Joan, @ Abraham, @ Miracle );WELL DONE!!"
+    return "MoMo Data Analysis App is running! @ David, @ Joan, @ Abraham, @ Miracle ); WELL DONE!!"
 
 if __name__ == "__main__":
     logging.info('Starting the application...')
