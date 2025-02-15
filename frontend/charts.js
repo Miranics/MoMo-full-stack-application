@@ -1,35 +1,33 @@
-document.addEventListener("DOMContentLoaded", async function () {
-    try {
-        const response = await fetch("http://127.0.0.1:5000/api/transactions");
-        const transactions = await response.json();
-
-        const ctx = document.getElementById("transactionsChart").getContext("2d");
-
-        const labels = transactions.map(tx => new Date(tx.timestamp).toLocaleDateString());
-        const amounts = transactions.map(tx => tx.amount);
-
-        new Chart(ctx, {
-            type: "bar",
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: "Transaction Amounts (RWF)",
-                    data: amounts,
-                    backgroundColor: "rgba(0, 0, 0, 0.8)", // Black for MTN branding
-                    borderColor: "black",
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    } catch (error) {
-        console.error("Error fetching transactions for chart:", error);
-    }
+document.addEventListener("DOMContentLoaded", function () {
+    fetch("http://127.0.0.1:5000/api/transactions")
+        .then(response => response.json())
+        .then(data => {
+            generateChart(data);
+        })
+        .catch(error => console.error("Error loading transactions for chart:", error));
 });
+
+function generateChart(transactions) {
+    let ctx = document.getElementById("transactionChart").getContext("2d");
+
+    let amounts = transactions.map(tx => tx.amount);
+    let timestamps = transactions.map(tx => new Date(tx.timestamp).toLocaleDateString());
+
+    new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: timestamps,
+            datasets: [{
+                label: "Transaction Amount (RWF)",
+                data: amounts,
+                borderColor: "#000",
+                backgroundColor: "rgba(0, 0, 0, 0.2)",
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+}
