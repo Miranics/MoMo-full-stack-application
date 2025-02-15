@@ -1,53 +1,52 @@
 body {
     font-family: Arial, sans-serif;
+    background-color: #ffcc00; /* MTN Yellow */
+    color: #333;
     margin: 0;
     padding: 0;
-    background-color: #fffbe6;
-    color: #333;
 }
 
 header {
-    background-color: #ffcc00;
-    color: black;
-    padding: 10px;
+    background-color: #000;
+    color: #fff;
     text-align: center;
+    padding: 1rem;
 }
 
-#summary {
-    display: flex;
-    justify-content: space-around;
-    margin: 20px;
-}
-
-.card {
-    background: white;
+main {
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 200px;
 }
 
-#chart-container {
-    width: 80%;
-    margin: auto;
+#userBalance {
+    background: #fff;
+    padding: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-}
-
-table, th, td {
-    border: 1px solid black;
+    background: #fff;
 }
 
 th, td {
     padding: 10px;
-    text-align: center;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
 }
 
 th {
-    background-color: #ffcc00;
+    background-color: #000;
+    color: #fff;
+}
+
+canvas {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    margin-top: 20px;
 }
