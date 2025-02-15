@@ -1,42 +1,30 @@
-document.addEventListener("DOMContentLoaded", () => {
-    fetchTransactions();
+document.addEventListener("DOMContentLoaded", function () {
+    fetch("http://127.0.0.1:5000/api/transactions")  // Use "/api" prefix
+        .then(response => response.json())
+        .then(data => {
+            console.log("Transactions:", data);
+            displayTransactions(data);
+        })
+        .catch(error => console.error("Error fetching transactions:", error));
 });
 
-async function fetchTransactions() {
-    try {
-        const response = await fetch("http://127.0.0.1:5000/api/transactions");
-        const data = await response.json();
-
-        updateSummary(data);
-        updateTransactionTable(data);
-        renderChart(data);
-    } catch (error) {
-        console.error("Error fetching transactions:", error);
-    }
-}
-
-function updateSummary(transactions) {
-    document.getElementById("total-transactions").textContent = transactions.length;
-    
-    const totalAmount = transactions.reduce((sum, tx) => sum + tx.amount, 0);
-    document.getElementById("total-amount").textContent = `${totalAmount.toLocaleString()} RWF`;
-}
-
-function updateTransactionTable(transactions) {
-    const tbody = document.getElementById("transaction-table-body");
-    tbody.innerHTML = "";
+function displayTransactions(transactions) {
+    const tableBody = document.getElementById("transaction-table-body");
+    tableBody.innerHTML = ""; // Clear previous entries
 
     transactions.forEach(tx => {
         const row = document.createElement("tr");
         row.innerHTML = `
+            <td>${tx.id}</td>
             <td>${tx.phone_number}</td>
-            <td>${tx.amount.toLocaleString()} RWF</td>
+            <td>${tx.amount} RWF</td>
             <td>${tx.transaction_type}</td>
             <td>${new Date(tx.timestamp).toLocaleString()}</td>
         `;
-        tbody.appendChild(row);
+        tableBody.appendChild(row);
     });
 }
+
 
 function renderChart(transactions) {
     const ctx = document.getElementById("transactionChart").getContext("2d");
