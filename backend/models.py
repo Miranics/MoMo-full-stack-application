@@ -1,22 +1,25 @@
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Text
-from sqlalchemy.orm import relationship, declarative_base
-from datetime import datetime
-
-Base = declarative_base()
-
-class Transaction(Base):
-    __tablename__ = "transactions"
-
-    id = Column(Integer, primary_key=True, index=True)
-    phone_number = Column(String(20), nullable=False)
-    amount = Column(Integer, nullable=False)
-    transaction_type = Column(String(50), nullable=False)
-    timestamp = Column(DateTime, default=datetime.utcnow)
+from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey
+from sqlalchemy.orm import relationship
+from backend.database import Base
 
 class User(Base):
-    __tablename__ = "users"
-
-    id = Column(Integer, primary_key=True, index=True)
+    __tablename__ = 'users'
+    
+    id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(100), nullable=False)
-    phone_number = Column(String(20), unique=True, nullable=False)
-    transactions = relationship("Transaction", backref="user")
+    phone_number = Column(String(15), unique=True, nullable=False)
+
+    # Relationship: One user can have many transactions
+    transactions = relationship("Transaction", back_populates="user")
+
+class Transaction(Base):
+    __tablename__ = 'transactions'
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    phone_number = Column(String(15), ForeignKey("users.phone_number"), nullable=False)  # ✅ Ensure FK
+    amount = Column(Float, nullable=False)
+    transaction_type = Column(String(50), nullable=False)
+    timestamp = Column(DateTime, nullable=False)
+
+    # Relationship back to User
+    user = relationship("User", back_populates="transactions")
