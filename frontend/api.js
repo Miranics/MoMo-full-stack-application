@@ -1,8 +1,9 @@
-// api.js - Complete Version
-const API_BASE_URL =  'http://127.0.0.1:5000/api/transactions';
+// api.js - Updated Version to make API calls
+const API_BASE_URL = 'http://127.0.0.1:5000/api';  // This matches the Flask backend URL
+
 let transactionsCache = null;
 let lastFetchTime = null;
-const CACHE_DURATION = 5 * 60 * 1000;
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes cache duration
 
 async function fetchAllTransactions() {
     const now = new Date().getTime();
@@ -66,6 +67,7 @@ function formatCurrency(amount) {
     return amount.toLocaleString('en-RW', { maximumFractionDigits: 0 }) + ' RWF';
 }
 
+// Expose functions globally for use in other scripts
 window.api = {
     fetchAllTransactions,
     fetchTransactionsPaginated,
