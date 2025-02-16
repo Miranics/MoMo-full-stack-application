@@ -2,7 +2,7 @@
 # MoMo Full-Stack Application 🚀💻
 
 ## 📝 Project Overview
-The MoMo Full-Stack Application is an enterprise-level web application designed to categorize raw data, process it into a MySQL database, and provide an interactive user interface. The backend is built using Python with Flask and SQLAlchemy, with data extraction using `lxml`, `beautifulsoup4`, and `pandas`.
+This MoMo Full-Stack Application is an enterprise-level web application designed to categorize raw data, process it into a MySQL database, and provide an interactive user interface. The backend is built using Python with Flask and SQLAlchemy, with data extraction using `lxml`, `beautifulsoup4`, and `pandas`.
 
 ---
 ## ⚙️ Prerequisites
