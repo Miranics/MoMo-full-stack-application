@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MTN MoMo Data Analytics - Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/charts.js"></script>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo-container">
+                <img src="assets/mtn-logo.png" alt="MTN Logo" class="mtn-logo-small">
+            </div>
+            <h1>MTN MoMo Data Analytics Dashboard</h1>
+        </div>
+        <nav class="main-nav">
+            <a href="index.html">Home</a>
+            <a href="dashboard.html" class="active">Dashboard</a>
+            <a href="transactions.html">Transactions</a>
+            <a href="visualizations.html">Visualizations</a>
+        </nav>
+    </header>
+    
+    <main>
+        <!-- Overview Section -->
+        <section class="overview">
+            <div class="card">
+                <h3>Total Transactions</h3>
+                <p id="total-transactions">0</p>
+            </div>
+            <div class="card">
+                <h3>Total Amount</h3>
+                <p id="total-amount">0 RWF</p>
+            </div>
+            <div class="card">
+                <h3>Most Frequent Type</h3>
+                <p id="most-frequent-type">N/A</p>
+            </div>
+        </section>
+        
+        <!-- Summary Charts -->
+        <section class="dashboard-charts">
+            <div class="chart-container">
+                <h3>Transaction Volume</h3>
+                <canvas id="dashboardBarChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <h3>Transaction Distribution</h3>
+                <canvas id="dashboardPieChart"></canvas>
+            </div>
+        </section>
+        
+        <!-- Recent Transactions -->
+        <section class="recent-transactions">
+            <div class="section-header">
+                <h2>Recent Transactions</h2>
+                <a href="transactions.html" class="view-all-link">View All</a>
+            </div>
+            <table id="recent-transactions-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Type</th>
+                        <th>Amount (RWF)</th>
+                        <th>Date</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rows will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+    
+    <footer>
+        <p>MTN MoMo Data Analytics Platform | &copy; 2024</p>
+    </footer>
+    
+    <script src="js/api.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
