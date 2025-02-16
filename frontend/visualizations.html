@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MTN MoMo Data Analytics - Visualizations</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/charts.js"></script>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo-container">
+                <img src="assets/mtn-logo.png" alt="MTN Logo" class="mtn-logo-small">
+            </div>
+            <h1>MTN MoMo Data Visualizations</h1>
+        </div>
+        <nav class="main-nav">
+            <a href="index.html">Home</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="transactions.html">Transactions</a>
+            <a href="visualizations.html" class="active">Visualizations</a>
+        </nav>
+    </header>
+    
+    <main>
+        <div class="vis-filter-controls">
+            <div class="date-range">
+                <label for="start-date">Start Date:</label>
+                <input type="date" id="start-date">
+                <label for="end-date">End Date:</label>
+                <input type="date" id="end-date">
+            </div>
+            <button id="apply-date-range">Apply</button>
+        </div>
+        
+        <div class="visualization-grid">
+            <!-- Transaction Volume by Type -->
+            <section class="vis-card">
+                <h2>Transaction Volume by Type</h2>
+                <div class="chart-container large">
+                    <canvas id="volumeByTypeChart"></canvas>
+                </div>
+            </section>
+            
+            <!-- Transaction Amount by Type -->
+            <section class="vis-card">
+                <h2>Transaction Amount by Type</h2>
+                <div class="chart-container large">
+                    <canvas id="amountByTypeChart"></canvas>
+                </div>
+            </section>
+            
+            <!-- Monthly Transaction Trends -->
+            <section class="vis-card full-width">
+                <h2>Monthly Transaction Trends</h2>
+                <div class="chart-container extra-large">
+                    <canvas id="monthlyTrendsChart"></canvas>
+                </div>
+            </section>
+            
+            <!-- Transaction Distribution -->
+            <section class="vis-card">
+                <h2>Transaction Distribution</h2>
+                <div class="chart-container large">
+                    <canvas id="transactionDistributionChart"></canvas>
+                </div>
+            </section>
+            
+            <!-- Average Transaction Amount -->
+            <section class="vis-card">
+                <h2>Average Transaction Amount</h2>
+                <div class="chart-container large">
+                    <canvas id="avgTransactionChart"></canvas>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <footer>
+        <p>MTN MoMo Data Analytics Platform | &copy; 2024</p>
+    </footer>
+    
+    <script src="js/api.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

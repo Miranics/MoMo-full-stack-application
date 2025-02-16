@@ -3,94 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MoMo Data Dashboard</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>MTN MoMo Data Analytics - Welcome</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-    <header>
-        <h1>MoMo Data Analysis</h1>
-    </header>
-    <main>
-        <section id="summary">
-            <div class="card">
-                <h3>Total Transactions</h3>
-                <p id="total-transactions">0</p>
-            </div>
-            <div class="card">
-                <h3>Total Amount Processed</h3>
-                <p id="total-amount">0 RWF</p>
-            </div>
-        </section>
-
-        <section id="chart-container">
-            <canvas id="transactionChart"></canvas>
-        </section>
-
-        <section id="transactions">
-            <h2>Transaction History</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Phone Number</th>
-                        <th>Amount (RWF)</th>
-                        <th>Type</th>
-                        <th>Timestamp</th>
-                    </tr>
-                </thead>
-                <tbody id="transaction-table-body">
-                    <!-- Transactions will be inserted dynamically -->
-                </tbody>
-            </table>
-        </section>
-    </main>
-    <script src="app.js"></script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MoMo Data Analysis</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="app.js" defer></script>
-    <script src="charts.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body>
-
-    <header>
-        <h1>MoMo Dashboard</h1>
-    </header>
-
-    <main>
-        <section id="userBalance">
-            <!-- User balance will be displayed here -->
-        </section>
-
-        <section id="transactions">
-            <h2>Transaction History</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Phone Number</th>
-                        <th>Amount</th>
-                        <th>Type</th>
-                        <th>Timestamp</th>
-                    </tr>
-                </thead>
-                <tbody id="transactionTableBody">
-                    <!-- Transaction data will be inserted here -->
-                </tbody>
-            </table>
-        </section>
-
-        <section id="charts">
-            <h2>Transaction Trends</h2>
-            <canvas id="transactionChart"></canvas>
-        </section>
-    </main>
-
+<body class="home-page">
+    <div class="welcome-container">
+        <div class="logo-container">
+            <img src="assets/mtn-logo.png" alt="MTN Logo" class="mtn-logo">
+        </div>
+        <h1>Welcome to MTN MoMo Data Analytics</h1>
+        <p>Analyze and visualize your mobile payment data with our powerful dashboard</p>
+        
+        <div class="button-grid">
+            <a href="dashboard.html" class="nav-button">
+                <span class="icon">📊</span>
+                <span class="label">Dashboard</span>
+                <span class="description">View key metrics and overview</span>
+            </a>
+            
+            <a href="transactions.html" class="nav-button">
+                <span class="icon">💳</span>
+                <span class="label">Transactions</span>
+                <span class="description">Browse and filter transaction data</span>
+            </a>
+            
+            <a href="visualizations.html" class="nav-button">
+                <span class="icon">📈</span>
+                <span class="label">Visualizations</span>
+                <span class="description">Explore data through interactive charts</span>
+            </a>
+        </div>
+    </div>
+    
+    <footer>
+        <p>MTN MoMo Data Analytics Platform | &copy; 2024</p>
+    </footer>
 </body>
 </html>

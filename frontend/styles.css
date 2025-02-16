@@ -1,0 +1,473 @@
+/* General Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+  line-height: 1.6;
+}
+
+a {
+  text-decoration: none;
+  color: #0066cc;
+}
+
+/* Header Styles */
+header {
+  background-color: #ffcc00; /* MTN Yellow */
+  padding: 15px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+}
+
+.logo-container {
+  margin-right: 20px;
+}
+
+.mtn-logo-small {
+  height: 40px;
+}
+
+.main-nav {
+  display: flex;
+  justify-content: center;
+  background-color: #333;
+  padding: 10px 0;
+}
+
+.main-nav a {
+  color: white;
+  padding: 8px 15px;
+  margin: 0 5px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.main-nav a:hover {
+  background-color: #555;
+}
+
+.main-nav a.active {
+  background-color: #ffcc00;
+  color: #333;
+  font-weight: bold;
+}
+
+/* Main Content */
+main {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 20px 60px 20px;
+}
+
+/* Welcome Page Styles */
+.home-page {
+  background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.welcome-container {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 30px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-container h1 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.welcome-container p {
+  color: #666;
+  margin-bottom: 30px;
+  font-size: 18px;
+}
+
+.mtn-logo {
+  width: 150px;
+  margin-bottom: 20px;
+}
+
+.button-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.nav-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 25px 15px;
+  background-color: white;
+  border: 2px solid #ffcc00;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  color: #333;
+}
+
+.nav-button:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  background-color: #fff5cc;
+}
+
+.nav-button .icon {
+  font-size: 36px;
+  margin-bottom: 15px;
+}
+
+.nav-button .label {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.nav-button .description {
+  font-size: 14px;
+  color: #666;
+  text-align: center;
+}
+
+/* Card and Overview Styles */
+.overview {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  flex: 1;
+  min-width: 200px;
+  margin: 0 10px 20px 10px;
+  text-align: center;
+}
+
+.card h3 {
+  color: #666;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.card p {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Search and Filter Styles */
+.search-filter {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  background-color: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-filter input,
+.search-filter select,
+.search-filter button {
+  padding: 8px 12px;
+  margin: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.search-filter button {
+  background-color: #ffcc00;
+  color: #333;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.search-filter button:hover {
+  background-color: #e6b800;
+}
+
+/* Transaction Type Buttons */
+.transaction-types {
+  margin-bottom: 30px;
+}
+
+.transaction-types h2 {
+  margin-bottom: 15px;
+}
+
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.type-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  border: 2px solid #ffcc00;
+  border-radius: 8px;
+  padding: 10px;
+  min-width: 100px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.type-button:hover {
+  background-color: #fff5cc;
+  transform: translateY(-2px);
+}
+
+.type-button.active {
+  background-color: #ffcc00;
+  color: #333;
+  font-weight: bold;
+}
+
+.type-button .icon {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+.type-button span:not(.icon) {
+  font-size: 12px;
+  text-align: center;
+}
+
+/* Table Styles */
+.transactions table,
+.recent-transactions table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.transactions th,
+.transactions td,
+.recent-transactions th,
+.recent-transactions td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.transactions th,
+.recent-transactions th {
+  background-color: #ffcc00;
+  color: #333;
+  font-weight: bold;
+}
+
+.transactions tbody tr:hover,
+.recent-transactions tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+/* Section Headers */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.view-all-link {
+  font-size: 14px;
+  color: #0066cc;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  padding: 8px 12px;
+  margin: 0 5px;
+  border: 1px solid #ddd;
+  background-color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pagination button.active {
+  background-color: #ffcc00;
+  border-color: #ffcc00;
+  color: #333;
+  font-weight: bold;
+}
+
+.pagination button:hover:not(.active) {
+  background-color: #f5f5f5;
+}
+
+/* Dashboard Charts */
+.dashboard-charts {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.dashboard-charts .chart-container {
+  flex: 1;
+  min-width: 300px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.dashboard-charts h3 {
+  margin-bottom: 15px;
+  color: #333;
+}
+
+/* Visualization Page Styles */
+.vis-filter-controls {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.date-range {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.date-range label {
+  margin: 0 10px 0 0;
+}
+
+.date-range input {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-right: 15px;
+}
+
+#apply-date-range {
+  padding: 8px 15px;
+  background-color: #ffcc00;
+  color: #333;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#apply-date-range:hover {
+  background-color: #e6b800;
+}
+
+.visualization-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 20px;
+}
+
+.vis-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.vis-card h2 {
+  margin-bottom: 15px;
+  font-size: 18px;
+  color: #333;
+}
+
+.chart-container.large {
+  height: 300px;
+}
+
+.chart-container.extra-large {
+  height: 400px;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+/* Loading Indicator */
+.loading {
+  text-align: center;
+  padding: 20px;
+  font-style: italic;
+  color: #666;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 15px;
+  background-color: #333;
+  color: #ccc;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .overview,
+  .dashboard-charts,
+  .button-container {
+      flex-direction: column;
+  }
+  
+  .card,
+  .dashboard-charts .chart-container {
+      width: 100%;
+      margin-bottom: 15px;
+  }
+  
+  .vis-filter-controls {
+      flex-direction: column;
+      align-items: stretch;
+  }
+  
+  .date-range {
+      margin-bottom: 10px;
+  }
+  
+  .visualization-grid {
+      grid-template-columns: 1fr;
+  }
+}
