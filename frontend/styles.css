@@ -100,8 +100,24 @@ main {
 }
 
 .mtn-logo {
-  width: 150px;
+  height: auto;
+  width: 100%;
+  max-width: 150px; 
   margin-bottom: 20px;
+  object-fit: contain; 
+}
+
+
+@media screen and (max-width: 768px) {
+  .mtn-logo {
+    max-width: 120px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .mtn-logo {
+    max-width: 100px;
+  }
 }
 
 .button-grid {
