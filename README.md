@@ -61,7 +61,7 @@ Ensure you have Python installed. The following packages are installed in the vi
 ---
 ## 🖼️ App Display
 ```markdown
-![App Dispay](images/app_screenshot.PNG)
+![App Dispay](frontend/images/app_screenshot.PNG)
 ```
 
 ---
