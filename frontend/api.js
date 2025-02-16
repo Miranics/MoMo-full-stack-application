@@ -1,5 +1,5 @@
 // api.js - Complete Version
-const API_BASE_URL = '/api';
+const API_BASE_URL =  'http://127.0.0.1:5000/api/transactions';
 let transactionsCache = null;
 let lastFetchTime = null;
 const CACHE_DURATION = 5 * 60 * 1000;
