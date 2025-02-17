@@ -35,7 +35,7 @@ app.register_blueprint(api, url_prefix="/api")  # <-- Add "/api" prefix
 @app.route('/')
 def home():
     logging.info('Home route accessed')
-    return "MoMo Data Analysis App is running! @ David, @ Joan, @ Abraham, @ Miracle ); WELL DONE!!"
+    return " App is running! @ Miracle ); WELL DONE!!"
 
 if __name__ == "__main__":
     logging.info('Starting the application...')
