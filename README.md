@@ -60,9 +60,9 @@ Ensure you have Python installed. The following packages are installed in the vi
 
 ---
 ## 🖼️ App Display
-```markdown
-![App Dispay]
-```![app_screenshot](https://github.com/user-attachments/assets/6b96e8e9-139d-436d-840a-4aee46645c79)
+
+![WhatsApp Image 2025-02-17 at 10 59 54](https://github.com/user-attachments/assets/cea2e00c-a9f5-46d5-9b2b-d4f0b716cb56)
+
 
 
 ---
