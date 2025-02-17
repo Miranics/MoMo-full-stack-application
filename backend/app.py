@@ -3,6 +3,7 @@
 
 import logging
 from flask import Flask
+from flask_cors import CORS  # Import CORS
 from backend.routes import api  # Fix import
 from backend.database import engine, Base
 
@@ -18,6 +19,9 @@ logging.info('Flask app starting...')
 
 # Initialize Flask app
 app = Flask(__name__)
+
+# Enable CORS for all routes
+CORS(app)
 
 # Load configuration
 app.config.from_object('backend.config.Config')
