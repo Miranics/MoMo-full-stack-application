@@ -5,4 +5,4 @@ python-dotenv
 SQLAlchemy
 requests
 xmltodict
-flask-cors
+flask_cors
