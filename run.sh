@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Running Flask application with Gunicorn
+# Running Flask application with this shell script
 
 # Detect the OS and activate the virtual environment accordingly
 if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" ]]; then
@@ -10,11 +10,11 @@ else
     source venv/bin/activate
 fi
 
-# Install Gunicorn if it's missing
-if ! pip list | grep -q gunicorn; then
-    echo "Gunicorn not found. Installing..."
-    pip install gunicorn
-fi
+# Install missing dependencies
+pip install -r backend/requirements.txt
 
-# Run Gunicorn with 4 workers, binding to port 5000
-gunicorn -w 4 -b 0.0.0.0:5001 app:app
+# Set Flask environment variable
+export FLASK_APP=backend/app.py
+
+# Run Flask server (accessible externally)
+flask run --host=0.0.0.0 --port=8000
