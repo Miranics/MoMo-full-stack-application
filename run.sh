@@ -11,7 +11,7 @@ else
 fi
 
 # Install missing dependencies
-pip install -r backend/requirements.txt
+#pip install -r backend/requirements.txt
 
 # Set Flask environment variable
 export FLASK_APP=backend/app.py
