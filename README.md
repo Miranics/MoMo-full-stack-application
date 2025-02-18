@@ -1,6 +1,6 @@
 # MTN MoMo Data Analytics Platform 📊
 
-![MTN MoMo Analytics Dashboard](![image](https://github.com/user-attachments/assets/ed95645d-76c9-4d48-8ba4-a746f3c22efd)
+(![image](https://github.com/user-attachments/assets/ed95645d-76c9-4d48-8ba4-a746f3c22efd)
 )
 
 A comprehensive full-stack web application for analyzing MTN Mobile Money (MoMo) transaction data. This platform provides real-time insights, interactive visualizations, and detailed transaction analysis for mobile payment data.
@@ -79,25 +79,39 @@ A comprehensive full-stack web application for analyzing MTN Mobile Money (MoMo)
 ## 📂 Project Structure
 
 ```
-momo-full-stack-application/
-├── backend/
-│   ├── __init__.py
+MoMo-full-stack-application
+│── backend/                # Backend (Flask) application
 │   ├── app.py              # Main Flask application
-│   ├── config.py           # Configuration management
-│   ├── database.py         # Database connection
+│   ├── config.py           # Configuration settings (DB connection)
 │   ├── models.py           # SQLAlchemy models
-│   ├── routes.py           # API endpoints
-│   └── requirements.txt    # Python dependencies
-├── frontend/
-│   ├── index.html         # Welcome page
-│   ├── dashboard.html     # Main dashboard
-│   ├── transactions.html  # Transaction list
-│   ├── visualizations.html# Data visualizations
-│   ├── styles.css         # Stylesheets
-│   ├── api.js            # API integration
-│   ├── script.js         # Main JavaScript
-│   └── charts.js         # Chart configurations
-└── README.md
+│   ├── database.py         # Database initialization
+│   ├── sms_parser.py       # XML Parsing and processing
+│   ├── data_loader.py      # Insert parsed data into MySQL
+│   ├── routes.py           # API routes
+│   ├── requirements.txt    # Required Python libraries
+│   ├── logs/               # Store logs of ignored/unprocessed messages
+│   └── tests/              # Unit tests for backend
+│
+│── frontend/               # Frontend dashboard (HTML, CSS, JavaScript)
+│   ├── index.html          # Main dashboard page
+│   ├── style.css           # Stylesheet
+│   ├── app.js              # JavaScript logic for fetching & displaying data
+│   ├── charts.js           # Chart.js integration for visualizations
+│   ├── assets/             # Images, icons, etc.
+│
+│── migrations/             # Database migration files (if needed)
+│
+│── data/                   # Store provided XML data file
+│   ├── momo_sms.xml        # Sample XML file
+│
+│── docs/                   # Documentation files
+│   ├── report.pdf          # 2-3 page project report
+│
+│── .gitignore              # Ignore unnecessary files (logs, venv, etc.)
+│── README.md               # Project description & setup instructions
+│── AUTHORS                 # List of contributors
+│── run.sh                  # Shell script to start the application
+
 ```
 
 ## 🔧 Installation
@@ -276,7 +290,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👤 Authors
 
-**Miracle** - [Miranics](https://github.com/Miranics)
+**Nanen Miracle** - [Miranics](https://github.com/Miranics)
+**Akachi David Nwanze** <d.akachi@alustudent.com>
+**Abraham Chan Deng** <a.garang@alustudent.com>
+**Joan Kariza** <j.kariza@alustudent.com>
 
 ## 📞 Support
 
