@@ -1,5 +1,5 @@
 // api.js - Updated Version to make API calls
-const API_BASE_URL = 'http://127.0.0.1:5000/api';  // This matches the Flask backend URL
+const API_BASE_URL = 'http://54.237.192.135:8000/api';  // This matches the Flask backend URL
 
 let transactionsCache = null;
 let lastFetchTime = null;

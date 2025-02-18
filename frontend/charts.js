@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    fetch("http://127.0.0.1:5000/api/transactions")
+    fetch("http://54.237.192.135:8000/api/transactions")
         .then(response => response.json())
         .then(data => {
             processTransactionData(data);
