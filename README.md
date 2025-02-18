@@ -308,5 +308,7 @@ For support:
 - Chart.js team for visualization library
 - Flask and SQLAlchemy communities
 
+# 🔗 Link to application
+- http://54.237.192.135/ 
 ---
 Last updated: 2025-02-18
