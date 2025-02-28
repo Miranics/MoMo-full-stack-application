@@ -30,7 +30,7 @@ app.config.from_object('backend.config.Config')
 Base.metadata.create_all(bind=engine)
 
 # Register Blueprints with URL prefix
-app.register_blueprint(api, url_prefix="/api")  # <-- Add "/api" prefix
+app.register_blueprint(api, url_prefix="/api")  # 
 
 @app.route('/')
 def home():
