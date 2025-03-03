@@ -46,30 +46,30 @@ def parse_momo_sms(xml_file=DATA_FILE_PATH):
 def extract_transaction_details(sms_body):
     """Extracts transaction details from SMS content"""
     try:
-        # Transaction type patterns with more specific categories
+        # Updated transaction patterns to match actual SMS messages
         transaction_patterns = {
-            r"received money from": "Incoming Money",
-            r"paid to": "Payment",
-            r"transferred to": "Transfer",
-            r"deposited": "Deposit",
+            r"received \d+\s*RWF from": "Incoming Money",
+            r"payment of .+ to .+ has been completed": "Payment",
+            r"transferred to .+ from \d+": "Transfer",
+            r"bank deposit of": "Bank Deposit",
             r"withdrawn at": "Withdrawal",
             r"bought airtime": "Airtime Purchase",
-            r"paid electricity": "Utility Payment",
-            r"paid water": "Utility Payment",
-            r"bank transfer to": "Bank Transfer",
-            r"internet bundle": "Internet Bundle"
+            r"electricity": "Cash Power Bill Payment",
+            r"DIRECT PAYMENT": "Third Party Payment",
+            r"internet bundle": "Internet Bundle",
+            r"bank transfer": "Bank Transfer"
         }
 
-        # Amount pattern
-        amount_match = re.search(r"(\d{1,3}(?:,\d{3})*)\s*RWF", sms_body)
+        # Amount pattern - updated to handle amounts with commas
+        amount_match = re.search(r"(?:received|payment of|deposit of|transferred) (?:RWF\s*)?(\d{1,3}(?:,\d{3})*)\s*(?:RWF)?", sms_body)
         if not amount_match:
             return None
         
         # Clean and convert amount
         amount = float(amount_match.group(1).replace(",", ""))
         
-        # Phone number pattern
-        phone_match = re.search(r"\((\d{10,12})\)", sms_body)
+        # Phone number pattern - updated to handle different formats
+        phone_match = re.search(r"\(([*\d]{10,12})\)", sms_body)
         phone_number = phone_match.group(1) if phone_match else "UNKNOWN"
         
         # Determine transaction type
@@ -81,9 +81,9 @@ def extract_transaction_details(sms_body):
         
         # Date pattern - support multiple formats
         date_patterns = [
-            r"(\d{2}/\d{2}/\d{4}\s+\d{2}:\d{2})",
-            r"(\d{2}-\d{2}-\d{4}\s+\d{2}:\d{2})",
-            r"(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2})"
+            r"(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2})",  # YYYY-MM-DD HH:MM:SS
+            r"(\d{2}/\d{2}/\d{4}\s+\d{2}:\d{2})",        # DD/MM/YYYY HH:MM
+            r"(\d{2}-\d{2}-\d{4}\s+\d{2}:\d{2})"         # DD-MM-YYYY HH:MM
         ]
         
         timestamp = datetime.now()
@@ -95,12 +95,16 @@ def extract_transaction_details(sms_body):
                     if "/" in date_str:
                         timestamp = datetime.strptime(date_str, "%d/%m/%Y %H:%M")
                     elif "-" in date_str:
-                        if date_str[4] == "-":  # YYYY-MM-DD format
-                            timestamp = datetime.strptime(date_str, "%Y-%m-%d %H:%M")
-                        else:  # DD-MM-YYYY format
+                        if len(date_str.split("-")[0]) == 4:  # YYYY-MM-DD
+                            if len(date_str) > 16:  # Has seconds
+                                timestamp = datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S")
+                            else:
+                                timestamp = datetime.strptime(date_str, "%Y-%m-%d %H:%M")
+                        else:  # DD-MM-YYYY
                             timestamp = datetime.strptime(date_str, "%d-%m-%Y %H:%M")
                     break
-                except ValueError:
+                except ValueError as e:
+                    print(f"Date parsing error: {e} for date_str: {date_str}")
                     continue
                 
         return {
@@ -112,6 +116,7 @@ def extract_transaction_details(sms_body):
         
     except Exception as e:
         print(f"Error parsing SMS body: {e}")
+        print(f"Problematic SMS: {sms_body[:100]}...")  # Print first 100 chars of problematic SMS
         return None
 
 if __name__ == "__main__":
