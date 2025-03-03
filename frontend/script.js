@@ -96,21 +96,26 @@ document.addEventListener("DOMContentLoaded", function () {
         data.forEach(transaction => {
             const row = transactionsTable.insertRow();
             row.innerHTML = `
-                <td>${transaction.id}</td>
-                <td>${transaction.type}</td>
+                <td>${transaction.id || 'N/A'}</td>
+                <td>${transaction.transaction_type || 'Unknown'}</td>
                 <td>${window.api.formatCurrency(transaction.amount)}</td>
-                <td>${formatDate(transaction.date)}</td>
-                <td>${transaction.details}</td>
+                <td>${formatDate(transaction.timestamp)}</td>
+                <td class="sms-details">${transaction.sms_body || 'No details available'}</td>
             `;
         });
     }
 
     function formatDate(dateStr) {
+        if (!dateStr) return 'N/A';
         const date = new Date(dateStr);
-        if (isNaN(date.getTime())) {
-            return dateStr;
-        }
-        return date.toLocaleDateString();
+        if (isNaN(date.getTime())) return dateStr;
+        return date.toLocaleString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
     }
 
     function renderCharts(data) {
