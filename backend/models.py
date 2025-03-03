@@ -16,9 +16,9 @@ class Transaction(Base):
     __tablename__ = 'transactions'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    phone_number = Column(String(15), ForeignKey("users.phone_number"), nullable=False)  # ✅ Ensure FK
+    phone_number = Column(String(20))  # Increased length to handle masked numbers
     amount = Column(Float, nullable=False)
-    transaction_type = Column(String(50), nullable=False)
+    transaction_type = Column(String(100), nullable=False)  # Increased length
     timestamp = Column(DateTime, nullable=False)
 
     # Relationship back to User
