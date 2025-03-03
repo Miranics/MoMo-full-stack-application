@@ -26,19 +26,28 @@ def insert_transactions(transactions, batch_size=5):
     try:
         connection = get_connection()
         with connection.cursor() as cursor:
+            # First, alter the table to accommodate longer transaction types
+            alter_query = """
+            ALTER TABLE transactions 
+            MODIFY COLUMN transaction_type VARCHAR(100),
+            MODIFY COLUMN phone_number VARCHAR(20)
+            """
+            cursor.execute(alter_query)
+            connection.commit()
+
+            # Insert transactions
+            insert_query = """
+            INSERT INTO transactions 
+            (phone_number, amount, transaction_type, timestamp) 
+            VALUES (%s, %s, %s, %s)
+            """
+            
             for i in range(0, len(transactions), batch_size):
                 batch = transactions[i:i + batch_size]
-                
-                insert_query = """
-                INSERT INTO transactions 
-                (phone_number, amount, transaction_type, timestamp) 
-                VALUES (%s, %s, %s, %s)
-                """
-                
                 values = [
                     (str(t['phone_number'])[:20],
-                     int(t['amount']),
-                     str(t['transaction_type'])[:20],
+                     float(t['amount']),  # Changed to float
+                     str(t['transaction_type'])[:100],  # Increased length
                      t['timestamp']) for t in batch
                 ]
                 
@@ -58,15 +67,23 @@ def insert_transactions(transactions, batch_size=5):
 
 def load_data():
     try:
+        # Drop existing transactions
+        connection = get_connection()
+        with connection.cursor() as cursor:
+            cursor.execute("TRUNCATE TABLE transactions")
+            connection.commit()
+        connection.close()
+
+        # Load new transactions
         transactions = parse_momo_sms()
         if transactions:
             print(f"Found {len(transactions)} transactions")
-            # Process in smaller chunks
             for i in range(0, len(transactions), 50):
                 chunk = transactions[i:i+50]
                 insert_transactions(chunk, batch_size=5)
                 del chunk
                 gc.collect()
+            print("Data loading completed successfully")
     except Exception as e:
         print(f"Error in load_data: {e}")
 
